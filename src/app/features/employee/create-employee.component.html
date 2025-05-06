@@ -1,0 +1,33 @@
+<div class="create-employee-card">
+  <h2 class="card-title">Nuovo Dipendente</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="form-row" *ngFor="let f of fields">
+      <label [for]="f.key">{{ f.label }}</label>
+      <input
+        [type]="f.type"
+        [id]="f.key"
+        [formControlName]="f.key"
+        [placeholder]="f.placeholder"
+        [class.invalid]="submitted && form.get(f.key)?.invalid"
+      />
+      <small class="error"
+             *ngIf="submitted && form.get(f.key)?.hasError('required')">
+        {{ f.label }} obbligatorio
+      </small>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="loading" class="btn-submit">
+        {{ loading ? 'Caricamento…' : 'Crea Dipendente' }}
+      </button>
+      <button type="button" class="btn-cancel" routerLink="/dashboard">
+        Annulla
+      </button>
+    </div>
+
+    <div *ngIf="error" class="alert-error">
+      {{ error }}
+    </div>
+  </form>
+</div>
