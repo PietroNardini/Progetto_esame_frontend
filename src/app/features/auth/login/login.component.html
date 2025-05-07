@@ -1,45 +1,50 @@
-<!-- src/app/features/auth/login/login.component.html -->
-<div class="login-container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate class="login-form">
-    <h2 class="title">Accedi</h2>
+<div class="login-wrapper">
+  <div class="login-box">
+    <h1>Accedi</h1>
 
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        placeholder="tuo@esempio.com"
-      />
-      <div *ngIf="submitted && f['email'].invalid" class="error">
-        <span *ngIf="f['email'].errors?.['required']">Email obbligatoria.</span>
-        <span *ngIf="f['email'].errors?.['email']">Formato email non valido.</span>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <div class="input-group">
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder=" "
+          required
+        />
+        <label for="email">Email</label>
+        <span class="bar"></span>
+        <div *ngIf="submitted && f['email'].invalid" class="error">
+          <span *ngIf="f['email'].errors?.['required']">L'email è obbligatoria</span>
+          <span *ngIf="f['email'].errors?.['email']">Formato non valido</span>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input
-        id="password"
-        type="password"
-        formControlName="password"
-        placeholder="••••••••"
-      />
-      <div *ngIf="submitted && f['password'].invalid" class="error">
-        <span *ngIf="f['password'].errors?.['required']">Password obbligatoria.</span>
+      <div class="input-group">
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder=" "
+          required
+        />
+        <label for="password">Password</label>
+        <span class="bar"></span>
+        <div *ngIf="submitted && f['password'].invalid" class="error">
+          <span *ngIf="f['password'].errors?.['required']">La password è obbligatoria</span>
+        </div>
       </div>
-    </div>
 
-    <button type="submit" [disabled]="loading" class="btn-login">
-      {{ loading ? 'Caricamento…' : 'Accedi' }}
-    </button>
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Caricamento…' : 'Accedi' }}
+      </button>
 
-    <div *ngIf="errorMsg" class="error global-error">
-      {{ errorMsg }}
-    </div>
+      <a routerLink="/forgot-password" class="forgot-link">
+        Hai dimenticato la password?
+      </a>
 
-    <a class="forgot-link" routerLink="/forgot-password">
-      Password dimenticata?
-    </a>
-  </form>
+      <div *ngIf="errorMsg" class="alert error-msg">
+        {{ errorMsg }}
+      </div>
+    </form>
+  </div>
 </div>

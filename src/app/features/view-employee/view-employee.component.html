@@ -1,0 +1,45 @@
+<ng-container *ngIf="selected; else listView">
+    <div class="detail-card">
+      <h2>Dettagli Dipendente</h2>
+      <ul class="detail-list">
+        <li><strong>ID:</strong> {{ selected.id }}</li>
+        <li><strong>Nome:</strong> {{ selected.nome }} {{ selected.cognome }}</li>
+        <li><strong>Email:</strong> {{ selected.email }}</li>
+        <li><strong>Telefono:</strong> {{ selected.telefono || '–' }}</li>
+        <li><strong>Dipartimento:</strong> {{ selected.dipartimento }}</li>
+        <li><strong>Data di Nascita:</strong> {{ selected.dataDiNascita | date:'longDate' }}</li>
+      </ul>
+      <button routerLink="/dashboard" class="btn back-btn">
+        ← Torna alla Dashboard
+      </button>
+    </div>
+  </ng-container>
+  
+  <ng-template #listView>
+    <h2>Elenco Impiegati</h2>
+    <table class="emp-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Dipartimento</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of impiegati">
+          <td>{{ emp.id }}</td>
+          <td>{{ emp.nome }} {{ emp.cognome }}</td>
+          <td>{{ emp.dipartimento }}</td>
+          <td>
+            <a [routerLink]="['/employees', emp.id]" class="btn detail-btn">
+              Dettagli
+            </a>
+          </td>
+        </tr>
+        <tr *ngIf="impiegati.length === 0">
+          <td colspan="4" class="no-data">Nessun impiegato trovato</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>

@@ -1,10 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+// src/app/core/user.service.ts
+
+import { Injectable }      from '@angular/core';
+import { HttpClient }      from '@angular/common/http';
+import { Observable }      from 'rxjs';
 
 export interface Employee {
+  id: number;
   email: string;
-  password: string;
   nome: string;
   cognome: string;
   telefono?: string;
@@ -23,11 +25,23 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  /** POST /api/login */
-  login(email: string, password: string): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(
-      `${this.baseUrl}/Login`,
-      { email, password }
+  /** GET /api/GetAllImpiegati */
+  getAllImpiegati(): Observable<Employee[]> {
+    return this.http.get<Employee[]>(`${this.baseUrl}/GetAllImpiegati`);
+  }
+
+  getEmployeeById(id: number): Observable<Employee> {
+    return this.http.post<Employee>(
+      `${this.baseUrl}/GetById`,
+      { id }
+    );
+  }
+
+  /** (se in back-end serve davvero) POST /api/GetByDipartimento */
+  getByDipartimento(tipo: string, dip: string): Observable<Employee[]> {
+    return this.http.post<Employee[]>(
+      `${this.baseUrl}/GetByDipartimento`,
+      { tipo_Utente: tipo, dipartimento: dip }
     );
   }
 
@@ -39,11 +53,35 @@ export class UserService {
     );
   }
 
-  /** Se ti serve anche per manager */
+  /** POST /api/InsertManager */
   createManager(mgr: Employee): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(
       `${this.baseUrl}/InsertManager`,
       mgr
+    );
+  }
+
+  /** POST /api/ResetPasswordRequest */
+  requestPasswordReset(email: string): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(
+      `${this.baseUrl}/ResetPasswordRequest`,
+      { email }
+    );
+  }
+
+  /** POST /api/updatePassword */
+  changePassword(token: string, newPassword: string): Observable<{ message: string; userData?: any }> {
+    return this.http.post<{ message: string; userData?: any }>(
+      `${this.baseUrl}/updatePassword`,
+      { token, password: newPassword }
+    );
+  }
+
+  /** POST /api/Login */
+  login(email: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(
+      `${this.baseUrl}/Login`,
+      { email, password }
     );
   }
 }
