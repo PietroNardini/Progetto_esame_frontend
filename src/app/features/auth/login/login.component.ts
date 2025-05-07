@@ -1,3 +1,4 @@
+// src/app/features/auth/login/login.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -5,12 +6,12 @@ import { Router, RouterModule } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { UserService, LoginResponse } from '../../../core/user.service';
-import { AuthService }                 from '../../../core/auth.service';
+import { AuthService } from '../../../core/auth.service';
 
 @Component({
   standalone: true,
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [ CommonModule, ReactiveFormsModule, RouterModule ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: ['', Validators.required]
     });
 
-    // Se già loggato, va in dashboard
+    // se sei già loggato, vai subito in dashboard
     this.subs.add(
       this.authService.isLoggedIn$.subscribe(logged => {
         if (logged) this.router.navigate(['/dashboard']);
@@ -48,7 +49,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.submitted = true;
     this.errorMsg  = '';
-
     if (this.loginForm.invalid) return;
 
     this.loading = true;

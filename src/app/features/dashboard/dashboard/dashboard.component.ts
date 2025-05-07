@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule }      from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Observable }        from 'rxjs';
 import { AuthService }       from '../../../core/auth.service';
 
@@ -14,10 +14,11 @@ import { AuthService }       from '../../../core/auth.service';
 export class DashboardComponent implements OnInit {
   week: Date[] = [];
   today = new Date();
-  userRole$: Observable<string | null>;
+
+  public userRole$: Observable<string | null>;
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router
   ) {
     this.userRole$ = this.authService.userRole$;
@@ -27,16 +28,10 @@ export class DashboardComponent implements OnInit {
     this.generateCurrentWeek(this.today);
   }
 
-  /** Logout e redirect a /login */
-  onLogout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
-  }
-
-  private generateCurrentWeek(ref: Date) {
-    const monday = new Date(ref);
+  private generateCurrentWeek(reference: Date) {
+    const monday = new Date(reference);
     const day = monday.getDay();
-    const diff = (day + 6) % 7; // trasforma Sunday=0→6, Monday=1→0, …
+    const diff = (day + 6) % 7;
     monday.setDate(monday.getDate() - diff);
 
     this.week = [];
@@ -45,5 +40,15 @@ export class DashboardComponent implements OnInit {
       d.setDate(monday.getDate() + i);
       this.week.push(d);
     }
+  }
+
+  goToEmployees(): void {
+    console.log('⏩ Navigazione a /employees');
+    this.router.navigate(['/employees']);
+  }
+
+  onLogout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

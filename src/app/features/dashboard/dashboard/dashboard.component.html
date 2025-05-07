@@ -3,30 +3,36 @@
     <div class="nav-title">Dashboard Ore</div>
     <button
       *ngIf="(userRole$ | async) === 'Manager'"
-      routerLink="/create-employee"
-      class="btn-create">
+      (click)="goToEmployees()"
+      class="btn-create"
+    >
       Crea Dipendente
     </button>
   </div>
 
   <button class="btn-logout" (click)="onLogout()">Logout</button>
+
+  <button
+    *ngIf="(userRole$ | async) === 'Manager'"
+    (click)="goToEmployees()"
+    class="btn-view"
+  >
+    Visualizza Impiegati
+  </button>
 </nav>
 
 <section class="calendar">
-  <!-- header giorni -->
   <div class="calendar-row header">
     <div
       *ngFor="let d of week; let i = index"
       class="calendar-cell header-cell"
-      [ngClass]="{ today: d.toDateString() === today.toDateString() }">
-      <div class="weekday">
-        {{ ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'][i] }}
-      </div>
+      [ngClass]="{ today: d.toDateString() === today.toDateString() }"
+    >
+      <div class="weekday">{{ ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'][i] }}</div>
       <div class="date">{{ d.getDate() }}</div>
     </div>
   </div>
 
-  <!-- corpo vuoto (orari in futuro) -->
   <div class="calendar-row body">
     <div *ngFor="let d of week" class="calendar-cell body-cell"></div>
   </div>
