@@ -42,6 +42,10 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  goToCreateEmployee(): void {
+    this.router.navigate(['/create-employee']);
+  }
+
   goToEmployees(): void {
     console.log('⏩ Navigazione a /employees');
     this.router.navigate(['/employees']);

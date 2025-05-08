@@ -3,7 +3,7 @@
     <div class="nav-title">Dashboard Ore</div>
     <button
       *ngIf="(userRole$ | async) === 'Manager'"
-      (click)="goToEmployees()"
+      (click)="goToCreateEmployee()"
       class="btn-create"
     >
       Crea Dipendente
@@ -22,6 +22,7 @@
 </nav>
 
 <section class="calendar">
+  <!-- header giorni -->
   <div class="calendar-row header">
     <div
       *ngFor="let d of week; let i = index"
@@ -33,6 +34,7 @@
     </div>
   </div>
 
+  <!-- corpo vuoto -->
   <div class="calendar-row body">
     <div *ngFor="let d of week" class="calendar-cell body-cell"></div>
   </div>
