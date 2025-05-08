@@ -1,0 +1,29 @@
+<div class="container py-5">
+    <h3 class="mb-4 text-center">Lista Dipendenti</h3>
+  
+    <section class="mb-4">
+      <form class="d-flex justify-content-center gap-2">
+        <input type="text" placeholder="Cerca per nome" #filter class="form-control w-50" />
+        <button class="btn btn-primary" type="button" (click)="filterResults(filter.value)">Cerca</button>
+        <button class="btn btn-secondary" type="button" (click)="removeFilters()">Rimuovi Filtri</button>
+        <img src="refresh.png" alt="Refresh" class="img-fluid" (click)="refreshPage()" style="cursor: pointer; width: 30px; height: 30px;" />
+      </form>
+    </section>
+  
+    <p *ngIf="filteredEmployees.length === 0" class="text-center text-muted">Nessun dipendente trovato</p>
+  
+    <div class="row g-4" *ngIf="filteredEmployees.length > 0">
+      <div class="col-sm-12 col-md-6 col-lg-4" *ngFor="let employee of filteredEmployees">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body d-flex flex-column justify-content-between bg-light">
+            <h5 class="card-title text-dark">{{ employee.nome }} {{ employee.cognome }}</h5>
+            <p class="card-text mb-2"><strong>Dipartimento:</strong> {{ employee.department }}</p>
+            <div class="mt-auto text-end">
+              <button class="btn btn-outline-danger btn-sm" *ngIf="isAdmin" (click)="confirmDelete(employee.id)">Elimina</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
