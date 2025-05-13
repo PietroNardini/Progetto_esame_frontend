@@ -1,0 +1,56 @@
+<div class="assign-card">
+  <h2 class="card-title">Assegna Ore</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Impiegato -->
+    <div class="form-row">
+      <label>Email Impiegato</label>
+      <select formControlName="email">
+        <option value="" disabled>Seleziona impiegato…</option>
+        <option *ngFor="let e of employees" [value]="e.email">
+          {{ e.nome }} {{ e.cognome }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Ora esistente -->
+    <div class="form-row">
+      <label>Ora di Lavoro</label>
+      <select formControlName="oraId">
+        <option value="" disabled>Seleziona ora…</option>
+        <option *ngFor="let o of hours" [value]="o.id">
+          {{ o.data }} — {{ o.inizio }}–{{ o.fine }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Tipo -->
+    <div class="form-row">
+      <label>Tipo Ora</label>
+      <select formControlName="tipoOra">
+        <option value="normale">Normale</option>
+        <option value="straordinario">Straordinario</option>
+      </select>
+    </div>
+
+    <!-- Azioni -->
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn-submit"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Assegno…' : 'Assegna Ore' }}
+      </button>
+      <button
+        type="button"
+        class="btn-cancel"
+        routerLink="/dashboard"
+      >
+        Annulla
+      </button>
+    </div>
+
+    <div *ngIf="error" class="alert-error">{{ error }}</div>
+  </form>
+</div>

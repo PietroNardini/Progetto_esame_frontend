@@ -1,20 +1,26 @@
-<div class="create-employee-card">
-  <h2 class="card-title">Nuovo Dipendente</h2>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <!-- campo nascosto per type -->
+  <input type="hidden" formControlName="type" />
+
+  <div class="create-employee-card">
+    <h2 class="card-title">Nuovo Dipendente</h2>
 
     <div class="form-row" *ngFor="let f of fields">
-      <label [for]="f.key">{{ f.label }}</label>
-      <input
-        [type]="f.type"
-        [id]="f.key"
-        [formControlName]="f.key"
-        [placeholder]="f.placeholder"
-        [class.invalid]="submitted && form.get(f.key)?.invalid"
-      />
-      <small class="error"
-             *ngIf="submitted && form.get(f.key)?.hasError('required')">
-        {{ f.label }} obbligatorio
-      </small>
+      <!-- salta il campo type perché già nel hidden -->
+      <ng-container *ngIf="f.key !== 'type'">
+        <label [for]="f.key">{{ f.label }}</label>
+        <input
+          [type]="f.type"
+          [id]="f.key"
+          [formControlName]="f.key"
+          [placeholder]="f.placeholder"
+          [class.invalid]="submitted && form.get(f.key)?.invalid"
+        />
+        <small class="error"
+               *ngIf="submitted && form.get(f.key)?.hasError('required')">
+          {{ f.label }} obbligatorio
+        </small>
+      </ng-container>
     </div>
 
     <div class="form-actions">
@@ -29,5 +35,5 @@
     <div *ngIf="error" class="alert-error">
       {{ error }}
     </div>
-  </form>
-</div>
+  </div>
+</form>

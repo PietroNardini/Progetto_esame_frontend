@@ -1,0 +1,52 @@
+/* src/app/features/assign-multi-hours/assign-multi-hours.component.css */
+.assign-multi-card {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.assign-multi-card h2 {
+  margin-bottom: 1rem;
+}
+.form-row {
+  margin-bottom: 1rem;
+}
+.form-row label {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.form-row select {
+  width: 100%;
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.error {
+  color: #c00;
+  font-size: 0.875rem;
+}
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.btn-submit {
+  background: #007bff;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+}
+.btn-cancel {
+  background: #eee;
+  color: #333;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+}
+.alert-error {
+  margin-top: 1rem;
+  color: #a00;
+  font-weight: bold;
+}

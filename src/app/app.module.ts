@@ -5,14 +5,16 @@ import { HttpClientModule }    from '@angular/common/http';
 
 import { AppRoutingModule }    from './app-routing.module';
 import { AppComponent }        from './app.component';
+import { AssignHoursComponent } from './features/assign-hours/assign-hours-single/assign-hours.component';
 
 @NgModule({
-  declarations: [ AppComponent ],
+  declarations: [ AppComponent, ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule ,
+    AssignHoursComponent
   ],
   bootstrap: [ AppComponent ]
 })

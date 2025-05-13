@@ -1,0 +1,62 @@
+<!-- src/app/features/assign-multi-hours/assign-multi-hours.component.html -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="assign-multi-form">
+  <!-- Dipendenti -->
+  <div class="form-row" [class.invalid]="submitted && form.get('dipendenti')?.invalid">
+    <label>Seleziona Dipendenti</label>
+    <div class="checkbox-list">
+      <label *ngFor="let e of employees" class="checkbox-item">
+        <input
+          type="checkbox"
+          [value]="e.id"
+          (change)="onEmployeeToggle($event)"
+          [checked]="selectedEmployees.includes(e.id)"
+        />
+        {{ e.nome }} {{ e.cognome }} ({{ e.email }})
+      </label>
+    </div>
+    <small *ngIf="submitted && form.get('dipendenti')?.hasError('required')" class="error">
+      Devi selezionare almeno un dipendente
+    </small>
+  </div>
+
+  <!-- Ore -->
+ <!-- src/app/features/assign-multi-hours/assign-hours-multiple.component.html -->
+<!-- … -->
+<!-- Ore -->
+<div class="form-row" [class.invalid]="submitted && form.get('ore')?.invalid">
+  <label for="ore">Seleziona Orari</label>
+  <select id="ore" formControlName="ore" multiple size="5">
+    <option *ngFor="let h of hours" [value]="h.id">
+      {{ h.data | date:'dd/MM/yyyy' }} — {{ h.inizio }} – {{ h.fine }}
+    </option>
+  </select>
+  <small *ngIf="submitted && form.get('ore')?.hasError('required')" class="error">
+    Devi selezionare almeno un orario
+  </small>
+</div>
+<!-- … -->
+
+  <!-- Tipo Ora -->
+  <div class="form-row">
+    <label for="tipoOra">Tipo Ora</label>
+    <select id="tipoOra" formControlName="tipoOra">
+      <option value="normale">Normale</option>
+      <option value="straordinario">Straordinario</option>
+    </select>
+  </div>
+
+  <!-- Pulsanti -->
+  <div class="form-actions">
+    <button type="submit" class="btn-submit" [disabled]="loading">
+      {{ loading ? 'Assegno…' : 'Assegna Ore' }}
+    </button>
+    <button type="button" class="btn-cancel" routerLink="/dashboard">
+      Annulla
+    </button>
+  </div>
+
+  <!-- Errore -->
+  <div *ngIf="error" class="alert-error">
+    {{ error }}
+  </div>
+</form>
