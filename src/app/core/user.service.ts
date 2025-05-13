@@ -5,6 +5,7 @@ import { HttpClient }      from '@angular/common/http';
 import { Observable }      from 'rxjs';
 
 export interface Employee {
+  type: string;  
   id: number;
   email: string;
   nome: string;
@@ -16,7 +17,11 @@ export interface Employee {
 
 export interface LoginResponse {
   message: string;
-  userData: { email: string; tipo: string };
+  userData: {
+    email:       string;
+    tipo:        string;
+    dipartimento: string;
+  };
 }
 
 @Injectable({ providedIn: 'root' })
@@ -76,6 +81,26 @@ export class UserService {
       { token, password: newPassword }
     );
   }
+
+  /** POST /api/gethours */
+
+  assignOre(
+    oraId: number,
+    email: string,
+    tipoOra: 'normale' | 'straordinario'
+  ): Observable<{ message?: string; error?: string }> {
+    const body = {
+      Id_Ora:  oraId.toString(),
+      email:   email,
+      tipoOra: tipoOra
+    };
+    return this.http.post<{ message?: string; error?: string }>(
+      `${this.baseUrl}/AssegnaOre`,
+      body
+    );
+  }
+
+  
 
   /** POST /api/Login */
   login(email: string, password: string): Observable<LoginResponse> {

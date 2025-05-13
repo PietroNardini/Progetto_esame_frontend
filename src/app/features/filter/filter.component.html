@@ -1,0 +1,43 @@
+<div class="filter-card">
+  <h2 class="card-title">Filtro Dipartimento</h2>
+
+  <div class="filter-actions">
+    <input
+      #filter
+      type="text"
+      placeholder="Cerca per nome o cognome…"
+      (input)="filterResults(filter.value)"
+      class="input-search"
+    />
+    <button
+      type="button"
+      class="btn-cancel"
+      (click)="removeFilters()"
+    >
+      Reset
+    </button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Email</th>
+        <th>Dipartimento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let e of filteredEmployees">
+        <td>{{ e.nome }}</td>
+        <td>{{ e.cognome }}</td>
+        <td>{{ e.email }}</td>
+        <td>{{ e.dipartimento }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!filteredEmployees.length" class="empty-state">
+    <p>Nessun dipendente trovato.</p>
+  </div>
+</div>

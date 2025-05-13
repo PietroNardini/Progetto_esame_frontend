@@ -1,90 +1,104 @@
-/* Nav top */
-.nav-top {
+/* src/app/features/dashboard/dashboard/dashboard.component.css */
+
+/* ============ NAVBAR ============ */
+.navbar {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  z-index: 100;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  border-radius: 0 0 8px 8px;
-  margin-bottom: 2rem;
 }
 
-.nav-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  position: relative;
   color: #333;
-}
-
-/* Pulsanti */
-.btn-create,
-.btn-view {
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
-  border: none;
-  color: #fff;
-  padding: 0.5rem 1.2rem;
-  font-size: 0.95rem;
   font-weight: 500;
-  border-radius: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  padding-bottom: 4px;
+  transition: color 0.2s;
 }
 
-.btn-create:hover,
-.btn-view:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+.nav-list a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #000;
+  transition: width 0.2s;
 }
 
-/* Pulsante Logout */
+.nav-list a:hover {
+  color: #000;
+}
+
+.nav-list a:hover::after {
+  width: 100%;
+}
+
 .btn-logout {
-  background: #ff4d4f;
+  background: none;
   border: none;
-  color: #fff;
-  padding: 0.45rem 1rem;
-  font-size: 0.9rem;
   font-weight: 500;
-  border-radius: 0.5rem;
+  color: #e00;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: color 0.2s;
 }
 
 .btn-logout:hover {
-  background: #d9363e;
+  color: #c00;
 }
 
-/* Calendario */
+/* ============ MAIN & CALENDAR ============ */
+.main-content {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
 .calendar {
-  display: grid;
-  gap: 0.5rem;
-  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .calendar-row {
-  display: flex;
-}
-
-.header-cell, .body-cell {
-  flex: 1;
-  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .header-cell {
-  padding: 0.75rem 0;
-  background: #f8f9fa;
-  border-radius: 4px;
+  text-align: center;
+  padding: 0.5rem 0;
+  color: #555;
 }
 
 .header-cell.today {
-  background: #6e8efb;
-  color: #fff;
+  background: rgba(0,0,0,0.05);
+  border-radius: 0.25rem;
 }
 
 .body-cell {
   height: 4rem;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-top: none;
 }
