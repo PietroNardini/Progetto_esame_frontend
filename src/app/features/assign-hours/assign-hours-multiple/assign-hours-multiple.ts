@@ -74,7 +74,6 @@ export class AssignMultiHoursComponent implements OnInit {
 
     this.loading = true;
 
-    // Uso selectedEmployees e ore dal form
     const idsDip = this.selectedEmployees;
     const idsOre = this.form.value.ore.map((o: any) => +o);
     const tipo   = this.form.value.tipoOra;
