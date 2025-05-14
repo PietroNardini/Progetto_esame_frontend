@@ -18,6 +18,7 @@ export interface Employee {
 export interface LoginResponse {
   message: string;
   userData: {
+    id:          number;
     email:       string;
     tipo:        string;
     dipartimento: string;
