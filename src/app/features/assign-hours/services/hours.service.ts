@@ -28,11 +28,6 @@ export class HoursService {
       filters
     );
   }
-
-  /**
-   * Recupera tutte le ore lavorative già assegnate a un impiegato per mese/anno.
-   * Ritorna un array di assegnazioni con data, fasce orarie e tipo.
-   */
   getMonthlyAssignments(
     impId: number,
     month: number,

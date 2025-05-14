@@ -7,7 +7,7 @@
       <li *ngIf="(userRole$ | async) === 'Manager'"><a routerLink="/employees">Impiegati</a></li>
       <li *ngIf="(userRole$ | async) === 'Manager'"><a routerLink="/assign-hours-multiple">Assegna Ore Multiple</a></li>
       <li *ngIf="(userRole$ | async) === 'Manager'">
-        <a routerLink="/filter">Dipendenti per Dipartimento</a>
+      <a routerLink="/filter">Dipendenti per Dipartimento</a>
       </li>
       <li *ngIf="(userRole$ | async) !== null">
        <a routerLink="/monthly-hours">Ore Mensili</a>
