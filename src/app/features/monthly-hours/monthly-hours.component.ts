@@ -17,22 +17,19 @@ export class MonthlyHoursComponent implements OnInit {
   private hrs     = inject(HoursService);
   private auth    = inject(AuthService);
 
-  /** data corrente usata per il mese */
+  
   current = new Date();
-  /** oggi, per evidenziare il giorno corrente */
-  today   = new Date();            // ← aggiunto
+  
+  today   = new Date();            
 
-  /** array di Date per ogni giorno del mese */
+  
   daysInMonth: Date[] = [];
-  /** assegnazioni ricevute dal server */
+  
   assignments: MonthlyAssignment[] = [];
-  /** id dell’impiegato loggato */
+  
   empId!: number;
 
   ngOnInit() {
-    // Supponiamo che AuthService esponga l’id via un payload o simile:
-    // per esempio: this.empId = this.auth.getUserId();
-    // oppure ricavalo dal token / userData che hai salvato
     this.empId = this.auth.getUserId()!;
     this.buildCalendar();
     this.loadAssignments();
@@ -66,7 +63,6 @@ export class MonthlyHoursComponent implements OnInit {
     this.loadAssignments();
   }
 
-  // monthly-hours.component.ts
 
 private formatLocalYMD(date: Date): string {
   const y = date.getFullYear();
