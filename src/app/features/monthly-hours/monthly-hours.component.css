@@ -1,0 +1,94 @@
+:host {
+  display: block;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  color: #333;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.mh-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.mh-nav-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.2s;
+}
+.mh-nav-btn:hover {
+  color: #000;
+}
+
+.mh-title {
+  flex: 1;
+  text-align: center;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.mh-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #666;
+}
+
+.mh-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: 100px;
+  gap: 0.5rem;
+}
+
+.mh-cell {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  position: relative;
+  overflow: auto;
+}
+
+.mh-cell.today {
+  border: 2px solid #007bff;
+}
+
+.mh-date {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.mh-pill {
+  display: block;
+  margin-top: 1.5rem;
+  padding: 0.2rem 0.4rem;
+  font-size: 0.75rem;
+  border-radius: 12px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mh-pill--normal {
+  background-color: #e0f7e9;
+  color: #027a33;
+}
+
+.mh-pill--extra {
+  background-color: #fff4e0;
+  color: #a65f00;
+}

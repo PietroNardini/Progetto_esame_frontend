@@ -11,6 +11,8 @@ export interface Ora {
   fine:                 string;  // “HH:mm:ss”
 }
 
+export type MonthlyAssignment = Ora;
+
 @Injectable({ providedIn: 'root' })
 export class HoursService {
   private readonly baseUrl = '/api';
@@ -26,6 +28,27 @@ export class HoursService {
       filters
     );
   }
+
+  /**
+   * Recupera tutte le ore lavorative già assegnate a un impiegato per mese/anno.
+   * Ritorna un array di assegnazioni con data, fasce orarie e tipo.
+   */
+  getMonthlyAssignments(
+    impId: number,
+    month: number,
+    year: number
+  ): Observable<MonthlyAssignment[]> {
+    const body = {
+      Id_Impiegato: impId.toString(),
+      month: month.toString(),
+      year: year.toString()
+    };
+    return this.http.post<MonthlyAssignment[]>(
+      `${this.baseUrl}/GetAllWorkingHoursByImpiegato`,
+      body
+    );
+  }
+
 
   /** Assegna una singola ora a un impiegato */
   assignSingleHour(
@@ -59,6 +82,15 @@ export class HoursService {
     return this.http.post<{ message?: string; error?: string }>(
       `${this.baseUrl}/AssegnaOre`,
       body
+    );
+  }
+    getEmployeeHours(
+    empId: number,
+    filters: { month?: string; day?: string; year?: string } = {}
+  ): Observable<Ora[]> {
+    return this.http.post<Ora[]>(
+      `${this.baseUrl}/GetAllWorkingHoursByImpiegato`,
+      { Id_Impiegato: empId.toString(), ...filters }
     );
   }
 }

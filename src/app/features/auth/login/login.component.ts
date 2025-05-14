@@ -57,7 +57,11 @@
   next: (resp: LoginResponse) => {
     if (resp.message === 'Login successful' && resp.userData) {
       // ora resp.userData contiene email, tipo e dipartimento
-      this.authService.login(resp.userData);
+      this.authService.login({
+         id:   resp.userData.id,
+          email: resp.userData.email,
+          tipo:  resp.userData.tipo,
+          dipartimento: resp.userData.dipartimento});
       this.router.navigate(['/dashboard']);
     } else {
       this.errorMsg = resp.message;

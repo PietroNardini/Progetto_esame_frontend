@@ -55,4 +55,5 @@ export class DashboardComponent implements OnInit {
   goToEmployees()      { this.router.navigate(['/employees']); }
   goToFilter()      { this.router.navigate(['/filter']); }
   goToAssignMultiHours() {this.router.navigate(['/assign-hours-multiple']);}
+  goToMonthlyHours() { this.router.navigate(['/monthly-hours']); }
 }
