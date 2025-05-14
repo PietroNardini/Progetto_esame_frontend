@@ -1,48 +1,49 @@
 <!-- src/app/features/assign-multi-hours/assign-multi-hours.component.html -->
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="assign-multi-form">
-  <!-- Dipendenti -->
-  <div class="form-row" [class.invalid]="submitted && form.get('dipendenti')?.invalid">
-    <label>Seleziona Dipendenti</label>
-    <div class="checkbox-list">
-      <label *ngFor="let e of employees" class="checkbox-item">
-        <input
-          type="checkbox"
-          [value]="e.id"
-          (change)="onEmployeeToggle($event)"
-          [checked]="selectedEmployees.includes(e.id)"
-        />
-        {{ e.nome }} {{ e.cognome }} ({{ e.email }})
-      </label>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="assign-multi-form card">
+  <h2 class="card-title">Assegna Ore a più Dipendenti</h2>
+
+  <div class="form-body">
+    <!-- Dipendenti -->
+    <div class="form-row" [class.invalid]="submitted && form.get('dipendenti')?.invalid">
+      <label class="row-label">Dipendenti</label>
+      <div class="checkbox-grid">
+        <label *ngFor="let e of employees" class="checkbox-item">
+          <input
+            type="checkbox"
+            [value]="e.id"
+            (change)="onEmployeeToggle($event)"
+            [checked]="selectedEmployees.includes(e.id)"
+          />
+          <span>{{ e.nome }} {{ e.cognome }}</span>
+          <small class="email">{{ e.email }}</small>
+        </label>
+      </div>
+      <small *ngIf="submitted && form.get('dipendenti')?.hasError('required')" class="error">
+        Seleziona almeno un dipendente
+      </small>
     </div>
-    <small *ngIf="submitted && form.get('dipendenti')?.hasError('required')" class="error">
-      Devi selezionare almeno un dipendente
-    </small>
-  </div>
 
-  <!-- Ore -->
- <!-- src/app/features/assign-multi-hours/assign-hours-multiple.component.html -->
-<!-- … -->
-<!-- Ore -->
-<div class="form-row" [class.invalid]="submitted && form.get('ore')?.invalid">
-  <label for="ore">Seleziona Orari</label>
-  <select id="ore" formControlName="ore" multiple size="5">
-    <option *ngFor="let h of hours" [value]="h.id">
-      {{ h.data | date:'dd/MM/yyyy' }} — {{ h.inizio }} – {{ h.fine }}
-    </option>
-  </select>
-  <small *ngIf="submitted && form.get('ore')?.hasError('required')" class="error">
-    Devi selezionare almeno un orario
-  </small>
-</div>
-<!-- … -->
+    <!-- Orari -->
+    <div class="form-row" [class.invalid]="submitted && form.get('ore')?.invalid">
+      <label for="ore" class="row-label">Orari</label>
+      <select id="ore" formControlName="ore" multiple size="5">
+        <option *ngFor="let h of hours" [value]="h.id">
+          {{ h.data | date:'dd/MM/yyyy' }} — {{ h.inizio }} – {{ h.fine }}
+        </option>
+      </select>
+      <small *ngIf="submitted && form.get('ore')?.hasError('required')" class="error">
+        Seleziona almeno un orario
+      </small>
+    </div>
 
-  <!-- Tipo Ora -->
-  <div class="form-row">
-    <label for="tipoOra">Tipo Ora</label>
-    <select id="tipoOra" formControlName="tipoOra">
-      <option value="normale">Normale</option>
-      <option value="straordinario">Straordinario</option>
-    </select>
+    <!-- Tipo Ora -->
+    <div class="form-row">
+      <label for="tipoOra" class="row-label">Tipo</label>
+      <select id="tipoOra" formControlName="tipoOra">
+        <option value="normale">Normale</option>
+        <option value="straordinario">Straordinario</option>
+      </select>
+    </div>
   </div>
 
   <!-- Pulsanti -->

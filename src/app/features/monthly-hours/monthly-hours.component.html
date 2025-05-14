@@ -5,18 +5,29 @@
 </header>
 
 <div class="mh-weekdays">
-  <div *ngFor="let wd of ['Lun','Mar','Mer','Gio','Ven','Sab','Dom']" class="mh-weekday">{{ wd }}</div>
+  <div *ngFor="let wd of ['Lun','Mar','Mer','Gio','Ven','Sab','Dom']">{{ wd }}</div>
 </div>
 
 <div class="mh-grid">
-  <ng-container *ngFor="let day of daysInMonth">
-    <div class="mh-cell" [class.today]="day.toDateString()===today.toDateString()">
-      <div class="mh-date">{{ day.getDate() }}</div>
-      <ng-container *ngFor="let a of assignmentsFor(day)">
-        <span class="mh-pill" [ngClass]="a.tipo === 'STRAORDINARIO' ? 'mh-pill--extra' : 'mh-pill--normal'">
-          {{ a.inizio.substr(0,5) }}–{{ a.fine.substr(0,5) }}
-        </span>
-      </ng-container>
-    </div>
+  <ng-container *ngFor="let week of weeks">
+    <ng-container *ngFor="let day of week">
+      <div
+        class="mh-cell"
+        [class.empty]="!day"
+        [class.today]="day && day.toDateString() === today.toDateString()"
+      >
+        <ng-container *ngIf="day">
+          <div class="mh-date">{{ day.getDate() }}</div>
+          <ng-container *ngFor="let a of assignmentsFor(day)">
+            <span
+              class="mh-pill"
+              [ngClass]="a.tipo === 'STRAORDINARIO' ? 'mh-pill--extra' : 'mh-pill--normal'"
+            >
+              {{ a.inizio.substr(0,5) }}–{{ a.fine.substr(0,5) }}
+            </span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
   </ng-container>
 </div>
