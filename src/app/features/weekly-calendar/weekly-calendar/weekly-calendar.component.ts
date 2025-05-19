@@ -22,12 +22,12 @@ export class WeeklyCalendarComponent implements OnInit {
   assignments: OraImpiegatoRecord[] = [];
 
   ngOnInit() {
-    // Se non loggato → login
+  
     this.auth.isLoggedIn$.subscribe(ok => {
       if (!ok) this.router.navigate(['/login']);
     });
 
-    // costruisci settimana e fascia orarie
+  
     this.buildWeek(new Date());
     this.buildHoursRange(8, 18);
 
