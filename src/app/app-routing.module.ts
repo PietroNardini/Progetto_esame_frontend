@@ -10,6 +10,7 @@ import { FilterComponent }          from './features/filter/filter.component';
 import { ForgotPasswordComponent }  from './features/forgot-password/forgot-password.component';
 import { ChangePasswordComponent }  from './features/change-password/change-password.component';
 import { AssignMultiHoursComponent } from './features/assign-hours/assign-hours-multiple/assign-hours-multiple';
+import { WeeklyCalendarComponent }  from './features/weekly-calendar/weekly-calendar/weekly-calendar.component';
 // import { AssignHoursComponent }     from './features/assign-hours/assign-hours-single/assign-hours.component';  
 import { MonthlyHoursComponent } from './features/monthly-hours/monthly-hours.component';
 import { AuthGuard }                from './core/auth.guard';
@@ -68,6 +69,12 @@ const routes: Routes = [
     path: 'monthly-hours', 
     component: MonthlyHoursComponent,
     canActivate: [AuthGuard]   
+  },
+
+  {
+    path: 'weekly-calendar',
+    component: WeeklyCalendarComponent,
+    canActivate: [AuthGuard]
   },
 
   // default and wildcard

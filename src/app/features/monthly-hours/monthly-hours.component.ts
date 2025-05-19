@@ -1,8 +1,9 @@
+// src/app/features/monthly-hours/monthly-hours.component.ts
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule }               from '@angular/common';
-import { HoursService, Ora }          from '../assign-hours/services/hours.service';
-import { AuthService }                from '../../core/auth.service';
-import { Router, RouterModule }       from '@angular/router';
+import { HoursService, Ora }         from '../assign-hours/services/hours.service';
+import { AuthService }               from '../../core/auth.service';
+import { Router, RouterModule }      from '@angular/router';
 
 @Component({
   standalone: true,
@@ -23,7 +24,7 @@ export class MonthlyHoursComponent implements OnInit {
   empId: number | null   = null;
 
   ngOnInit() {
-    this.empId = this.auth.getUserId();
+    this.empId = this.auth.getUserId?.() ?? null; 
     if (this.empId == null) {
       this.router.navigate(['/login']);
       return;
@@ -36,7 +37,7 @@ export class MonthlyHoursComponent implements OnInit {
     const year   = this.current.getFullYear();
     const month  = this.current.getMonth();
     const first  = new Date(year, month, 1);
-    const offset = (first.getDay() + 6) % 7;   // Mon=0…Sun=6
+    const offset = (first.getDay() + 6) % 7;   // Lun=0…Dom=6
     const days   = new Date(year, month + 1, 0).getDate();
 
     const cells: (Date|null)[] = [
@@ -51,35 +52,52 @@ export class MonthlyHoursComponent implements OnInit {
     }
   }
 
-  private fmt(d: Date) {
+  private fmtDate(d: Date) {
     const y = d.getFullYear();
     const m = String(d.getMonth()+1).padStart(2,'0');
-    const dd = String(d.getDate()).padStart(2,'0');
+    const dd= String(d.getDate()).padStart(2,'0');
     return `${y}-${m}-${dd}`;
   }
 
-    loadAssignments() {
+  private mergeContiguous(intervals: Ora[]): Ora[] {
+    if (!intervals.length) return [];
+    const sorted = intervals.slice().sort((a,b) => a.inizio.localeCompare(b.inizio));
+    const merged: Ora[] = [];
+    let cur = { ...sorted[0] };
+    for (let next of sorted.slice(1)) {
+      if (next.tipo === cur.tipo && next.inizio === cur.fine) {
+        cur.fine = next.fine;
+      } else {
+        merged.push(cur);
+        cur = { ...next };
+      }
+    }
+    merged.push(cur);
+    return merged;
+  }
+
+  loadAssignments() {
     const year  = this.current.getFullYear();
-    const month = this.current.getMonth() + 1; // API usa 1–12
+    const month = this.current.getMonth() + 1;
     this.hrs.getMonthlyAssignments(this.empId!, month, year)
       .subscribe(list => this.assignments = list || []);
   }
 
-
   prevMonth() {
-    this.current = new Date(this.current.getFullYear(), this.current.getMonth() - 1, 1);
+    this.current = new Date(this.current.getFullYear(), this.current.getMonth()-1, 1);
     this.buildCalendar();
     this.loadAssignments();
   }
   nextMonth() {
-    this.current = new Date(this.current.getFullYear(), this.current.getMonth() + 1, 1);
+    this.current = new Date(this.current.getFullYear(), this.current.getMonth()+1, 1);
     this.buildCalendar();
     this.loadAssignments();
   }
 
   assignmentsFor(day: Date|null): Ora[] {
     if (!day) return [];
-    const key = this.fmt(day);
-    return this.assignments.filter(a => a.data === key);
+    const key = this.fmtDate(day);
+    const raw = this.assignments.filter(a => a.data === key);
+    return this.mergeContiguous(raw);
   }
 }

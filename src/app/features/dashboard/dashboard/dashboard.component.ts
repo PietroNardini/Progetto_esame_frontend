@@ -24,19 +24,18 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // punto di partenza: lunedì della settimana corrente
     const now = new Date();
-    const dayOfWeek = (now.getDay() + 6) % 7; // 0 = Lun, …, 6 = Dom
+    const dayOfWeek = (now.getDay() + 6) % 7; 
     const monday    = new Date(now);
     monday.setDate(now.getDate() - dayOfWeek);
 
-    // prima settimana
+    
     const week1 = Array.from({ length: 7 }, (_, i) => {
       const d = new Date(monday);
       d.setDate(monday.getDate() + i);
       return d;
     });
-    // seconda settimana
+    
     const week2 = week1.map(d0 => {
       const d = new Date(d0);
       d.setDate(d0.getDate() + 7);

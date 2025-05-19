@@ -1,11 +1,14 @@
+<!-- src/app/features/monthly-hours/monthly-hours.component.html -->
 <header class="mh-header">
   <button class="mh-nav-btn" (click)="prevMonth()">‹</button>
-  <h2 class="mh-title">{{ current | date: 'MMMM yyyy' }}</h2>
+  <h2 class="mh-title">{{ current | date:'MMMM yyyy' }}</h2>
   <button class="mh-nav-btn" (click)="nextMonth()">›</button>
 </header>
 
 <div class="mh-weekdays">
-  <div *ngFor="let wd of ['Lun','Mar','Mer','Gio','Ven','Sab','Dom']">{{ wd }}</div>
+  <div *ngFor="let wd of ['Lun','Mar','Mer','Gio','Ven','Sab','Dom']">
+    {{ wd }}
+  </div>
 </div>
 
 <div class="mh-grid">
@@ -14,14 +17,18 @@
       <div
         class="mh-cell"
         [class.empty]="!day"
-        [class.today]="day && day.toDateString() === today.toDateString()"
+        [class.today]="day && day.toDateString()===today.toDateString()"
       >
         <ng-container *ngIf="day">
           <div class="mh-date">{{ day.getDate() }}</div>
           <ng-container *ngFor="let a of assignmentsFor(day)">
             <span
               class="mh-pill"
-              [ngClass]="a.tipo === 'STRAORDINARIO' ? 'mh-pill--extra' : 'mh-pill--normal'"
+              [ngClass]="
+                a.tipo==='STRAORDINARIO'
+                ? 'mh-pill--extra'
+                : 'mh-pill--normal'
+              "
             >
               {{ a.inizio.substr(0,5) }}–{{ a.fine.substr(0,5) }}
             </span>

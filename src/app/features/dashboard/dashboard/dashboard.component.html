@@ -12,6 +12,9 @@
       <li *ngIf="(userRole$ | async) !== null">
        <a routerLink="/monthly-hours">Ore Mensili</a>
       </li>
+      <li *ngIf="(userRole$ | async) === 'Manager'">
+        <a routerLink="/weekly-calendar">Vista Settimanale</a>
+      </li>
 
     </ul>
     <button class="btn-logout" (click)="onLogout()">Logout</button>
