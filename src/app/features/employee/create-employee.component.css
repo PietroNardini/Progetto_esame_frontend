@@ -1,108 +1,154 @@
-:host {
-    display: flex;
-    justify-content: center;
-    padding: 2rem;
-    font-family: 'Segoe UI', sans-serif;
-  }
-  
-  .create-employee-card {
-    background: white;
-    width: 100%;
-    max-width: 480px;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  }
-  
-  .card-title {
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2d3748;
-    text-align: center;
-  }
-  
-  .form-row {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-  }
-  
-  .form-row label {
-    margin-bottom: 0.4rem;
-    font-weight: 500;
-    color: #4a5568;
-  }
-  
-  .form-row input {
-    padding: 0.6rem 0.8rem;
-    font-size: 1rem;
-    border: 1px solid #cbd5e0;
-    border-radius: 6px;
-    transition: border-color 0.2s;
-  }
-  
-  .form-row input:focus {
-    outline: none;
-    border-color: #3182ce;
-  }
-  
-  .form-row input.invalid {
-    border-color: #e53e3e;
-  }
-  
-  .error {
-    margin-top: 0.25rem;
-    color: #e53e3e;
-    font-size: 0.875rem;
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.5rem;
-  }
-  
-  .btn-submit {
-    background: #3182ce;
-    color: white;
-    border: none;
-    padding: 0.7rem 1.4rem;
-    border-radius: 6px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  
-  .btn-submit:disabled {
-    background: #a0aec0;
-    cursor: not-allowed;
-  }
-  
-  .btn-submit:hover:not(:disabled) {
-    background: #2b6cb0;
-  }
-  
-  .btn-cancel {
-    background: transparent;
-    color: #4a5568;
-    border: none;
-    padding: 0.7rem 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
-  
-  .btn-cancel:hover {
-    color: #2d3748;
-  }
-  
-  .alert-error {
-    margin-top: 1rem;
-    padding: 0.8rem;
-    background: #fed7d7;
-    color: #c53030;
-    border-radius: 6px;
-    text-align: center;
-  }
+/* Wrapper generale */
+.create-employee-wrapper {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  position: relative;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Back arrow */
+.back-arrow {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #3182ce;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: color 0.2s;
+}
+
+.back-arrow:hover {
+  color: #2b6cb0;
+  text-decoration: underline;
+}
+
+.arrow-icon {
+  width: 1.35rem;
+  height: 1.35rem;
+  stroke-width: 2.5;
+}
+
+/* Card contenente il form */
+.create-employee-card {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Titolo form */
+.card-title {
+  margin-bottom: 2rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2d3748;
+  text-align: center;
+}
+
+/* Input */
+.form-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.25rem;
+}
+
+.form-row label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2a2e35;
+  font-size: 0.95rem;
+}
+
+.form-row input {
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #d0d7e2;
+  border-radius: 0.6rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.25s, box-shadow 0.2s;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.25);
+  background-color: white;
+}
+
+.form-row input.invalid {
+  border-color: #e53e3e;
+  background-color: #fff5f5;
+}
+
+/* Errore singolo campo */
+.error {
+  margin-top: 0.3rem;
+  color: #e53e3e;
+  font-size: 0.85rem;
+}
+
+/* Azioni form */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-submit {
+  background: #3182ce;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: #2b6cb0;
+}
+
+.btn-submit:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
+  padding: 0.75rem 1.3rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  background-color: #f1f5f9;
+  color: #2d3748;
+}
+
+/* Errore generale */
+.alert-error {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: #fed7d7;
+  color: #c53030;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+}
+

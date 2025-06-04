@@ -1,39 +1,123 @@
+:host {
+  display: block;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  padding: 2rem 1rem;
+  position: relative;
+  isolation: isolate;
+}
+
+/* BACK ARROW FISSO E CLICCABILE */
+.back-arrow {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #3182ce;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-decoration: none;
+  background: none;
+  z-index: 99999;
+  pointer-events: auto;
+}
+
+.back-arrow:hover {
+  color: #2b6cb0;
+  text-decoration: underline;
+}
+
+.arrow-icon {
+  width: 1.3rem;
+  height: 1.3rem;
+  stroke-width: 2.5;
+}
+
+/* CARD FILTRO */
 .filter-card {
-  max-width: 600px;
-  margin: 2rem auto;
-  background: white;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  position: relative;
+  max-width: 700px;
+  margin: 6rem auto 2rem;
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+  z-index: 1;
 }
+
 .card-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #333;
+  margin-bottom: 2rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2d3748;
+  text-align: center;
 }
+
+/* FILTRI */
 .filter-actions {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
+
 .input-search {
   flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #d0d7e2;
+  border-radius: 0.6rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.25s, box-shadow 0.2s;
 }
+
+.input-search:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.25);
+  background-color: white;
+}
+
+.btn-cancel {
+  background: transparent;
+  color: #4a5568;
+  border: 1px solid #cbd5e0;
+  padding: 0.75rem 1.3rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  background-color: #f1f5f9;
+  color: #2d3748;
+}
+
+/* TABELLA */
 .table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 0.95rem;
 }
+
 .table th,
 .table td {
   padding: 0.75rem;
   border-bottom: 1px solid #eee;
   text-align: left;
 }
+
+.table th {
+  color: #555;
+}
+
+/* STATO VUOTO */
 .empty-state {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 2rem;
   color: #666;
+  font-style: italic;
+  font-size: 0.95rem;
 }

@@ -2,38 +2,47 @@
   <!-- campo nascosto per type -->
   <input type="hidden" formControlName="type" />
 
-  <div class="create-employee-card">
-    <h2 class="card-title">Nuovo Dipendente</h2>
+  <div class="create-employee-wrapper">
+    <!-- Freccia indietro migliorata -->
+    <a routerLink="/dashboard" class="back-arrow" aria-label="Torna alla Dashboard">
+      <svg xmlns="http://www.w3.org/2000/svg" class="arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7 7-7" />
+      </svg>
+      <span class="back-text">Torna alla Home</span>
+    </a>
 
-    <div class="form-row" *ngFor="let f of fields">
-      <!-- salta il campo type perché già nel hidden -->
-      <ng-container *ngIf="f.key !== 'type'">
-        <label [for]="f.key">{{ f.label }}</label>
-        <input
-          [type]="f.type"
-          [id]="f.key"
-          [formControlName]="f.key"
-          [placeholder]="f.placeholder"
-          [class.invalid]="submitted && form.get(f.key)?.invalid"
-        />
-        <small class="error"
-               *ngIf="submitted && form.get(f.key)?.hasError('required')">
-          {{ f.label }} obbligatorio
-        </small>
-      </ng-container>
-    </div>
+    <div class="create-employee-card">
+      <h2 class="card-title">Nuovo Dipendente</h2>
 
-    <div class="form-actions">
-      <button type="submit" [disabled]="loading" class="btn-submit">
-        {{ loading ? 'Caricamento…' : 'Crea Dipendente' }}
-      </button>
-      <button type="button" class="btn-cancel" routerLink="/dashboard">
-        Annulla
-      </button>
-    </div>
+      <div class="form-row" *ngFor="let f of fields">
+        <ng-container *ngIf="f.key !== 'type'">
+          <label [for]="f.key">{{ f.label }}</label>
+          <input
+            [type]="f.type"
+            [id]="f.key"
+            [formControlName]="f.key"
+            [placeholder]="f.placeholder"
+            [class.invalid]="submitted && form.get(f.key)?.invalid"
+          />
+          <small class="error"
+                *ngIf="submitted && form.get(f.key)?.hasError('required')">
+            {{ f.label }} obbligatorio
+          </small>
+        </ng-container>
+      </div>
 
-    <div *ngIf="error" class="alert-error">
-      {{ error }}
+      <div class="form-actions">
+        <button type="submit" [disabled]="loading" class="btn-submit">
+          {{ loading ? 'Caricamento…' : 'Crea Dipendente' }}
+        </button>
+        <button type="button" class="btn-cancel" routerLink="/dashboard">
+          Annulla
+        </button>
+      </div>
+
+      <div *ngIf="error" class="alert-error">
+        {{ error }}
+      </div>
     </div>
   </div>
 </form>

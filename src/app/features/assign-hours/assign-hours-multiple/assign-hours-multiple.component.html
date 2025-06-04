@@ -1,63 +1,74 @@
 <!-- src/app/features/assign-multi-hours/assign-multi-hours.component.html -->
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="assign-multi-form card">
-  <h2 class="card-title">Assegna Ore a più Dipendenti</h2>
+<div class="assign-multi-wrapper">
+  <a routerLink="/dashboard" class="back-arrow">
+    <svg class="arrow-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+    </svg>
+    Torna alla Home
+  </a>
 
-  <div class="form-body">
-    <!-- Dipendenti -->
-    <div class="form-row" [class.invalid]="submitted && form.get('dipendenti')?.invalid">
-      <label class="row-label">Dipendenti</label>
-      <div class="checkbox-grid">
-        <label *ngFor="let e of employees" class="checkbox-item">
-          <input
-            type="checkbox"
-            [value]="e.id"
-            (change)="onEmployeeToggle($event)"
-            [checked]="selectedEmployees.includes(e.id)"
-          />
-          <span>{{ e.nome }} {{ e.cognome }}</span>
-          <small class="email">{{ e.email }}</small>
-        </label>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="assign-multi-form card">
+    <h2 class="card-title">Assegna Ore a più Dipendenti</h2>
+
+    <div class="form-body">
+      <!-- Dipendenti -->
+      <div class="form-row" [class.invalid]="submitted && form.get('dipendenti')?.invalid">
+        <label class="row-label">Dipendenti</label>
+        <div class="checkbox-grid">
+          <label *ngFor="let e of employees" class="checkbox-item">
+            <input
+              type="checkbox"
+              [value]="e.id"
+              (change)="onEmployeeToggle($event)"
+              [checked]="selectedEmployees.includes(e.id)"
+            />
+            <div class="checkbox-text">
+              <span>{{ e.nome }} {{ e.cognome }}</span>
+              <small class="email">{{ e.email }}</small>
+            </div>
+          </label>
+        </div>
+        <small *ngIf="submitted && form.get('dipendenti')?.hasError('required')" class="error">
+          Seleziona almeno un dipendente
+        </small>
       </div>
-      <small *ngIf="submitted && form.get('dipendenti')?.hasError('required')" class="error">
-        Seleziona almeno un dipendente
-      </small>
+
+      <!-- Orari -->
+      <div class="form-row" [class.invalid]="submitted && form.get('ore')?.invalid">
+        <label for="ore" class="row-label">Orari</label>
+        <select id="ore" formControlName="ore" multiple size="5">
+          <option *ngFor="let h of hours" [value]="h.id">
+            {{ h.data | date:'dd/MM/yyyy' }} — {{ h.inizio }} – {{ h.fine }}
+          </option>
+        </select>
+        <small *ngIf="submitted && form.get('ore')?.hasError('required')" class="error">
+          Seleziona almeno un orario
+        </small>
+      </div>
+
+      <!-- Tipo Ora -->
+      <div class="form-row">
+        <label for="tipoOra" class="row-label">Tipo</label>
+        <select id="tipoOra" formControlName="tipoOra">
+          <option value="normale">Normale</option>
+          <option value="straordinario">Straordinario</option>
+        </select>
+      </div>
     </div>
 
-    <!-- Orari -->
-    <div class="form-row" [class.invalid]="submitted && form.get('ore')?.invalid">
-      <label for="ore" class="row-label">Orari</label>
-      <select id="ore" formControlName="ore" multiple size="5">
-        <option *ngFor="let h of hours" [value]="h.id">
-          {{ h.data | date:'dd/MM/yyyy' }} — {{ h.inizio }} – {{ h.fine }}
-        </option>
-      </select>
-      <small *ngIf="submitted && form.get('ore')?.hasError('required')" class="error">
-        Seleziona almeno un orario
-      </small>
+    <!-- Pulsanti -->
+    <div class="form-actions">
+      <button type="submit" class="btn-submit" [disabled]="loading">
+        {{ loading ? 'Assegno…' : 'Assegna Ore' }}
+      </button>
+      <button type="button" class="btn-cancel" routerLink="/dashboard">
+        Annulla
+      </button>
     </div>
 
-    <!-- Tipo Ora -->
-    <div class="form-row">
-      <label for="tipoOra" class="row-label">Tipo</label>
-      <select id="tipoOra" formControlName="tipoOra">
-        <option value="normale">Normale</option>
-        <option value="straordinario">Straordinario</option>
-      </select>
+    <!-- Errore -->
+    <div *ngIf="error" class="alert-error">
+      {{ error }}
     </div>
-  </div>
-
-  <!-- Pulsanti -->
-  <div class="form-actions">
-    <button type="submit" class="btn-submit" [disabled]="loading">
-      {{ loading ? 'Assegno…' : 'Assegna Ore' }}
-    </button>
-    <button type="button" class="btn-cancel" routerLink="/dashboard">
-      Annulla
-    </button>
-  </div>
-
-  <!-- Errore -->
-  <div *ngIf="error" class="alert-error">
-    {{ error }}
-  </div>
-</form>
+  </form>
+</div>
