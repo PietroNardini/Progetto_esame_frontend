@@ -3,42 +3,48 @@
   <nav class="nav-container">
     <ul class="nav-list">
       <li><a routerLink="/dashboard">Home</a></li>
-      <li *ngIf="(userRole$ | async) === 'Manager'"><a routerLink="/create-employee">Crea Dipendente</a></li>
-      <li *ngIf="(userRole$ | async) === 'Manager'"><a routerLink="/employees">Impiegati</a></li>
-      <li *ngIf="(userRole$ | async) === 'Manager'"><a routerLink="/assign-hours-multiple">Assegna Ore Multiple</a></li>
       <li *ngIf="(userRole$ | async) === 'Manager'">
-      <a routerLink="/filter">Dipendenti per Dipartimento</a>
+        <a routerLink="/create-employee">Crea Dipendente</a>
+      </li>
+      <li *ngIf="(userRole$ | async) === 'Manager'">
+        <a routerLink="/employees">Impiegati</a>
+      </li>
+      <li *ngIf="(userRole$ | async) === 'Manager'">
+        <a routerLink="/assign-hours-multiple">Assegna Ore Multiple</a>
+      </li>
+      <li *ngIf="(userRole$ | async) === 'Manager'">
+        <a routerLink="/filter">Dipendenti per Dipartimento</a>
       </li>
       <li *ngIf="(userRole$ | async) !== null">
-       <a routerLink="/monthly-hours">Ore Mensili</a>
+        <a routerLink="/monthly-hours">Ore Mensili</a>
       </li>
-      <li *ngIf="(userRole$ | async) === 'Manager'">
-        <a routerLink="/weekly-calendar">Vista Settimanale</a>
+     <li *ngIf="(userRole$ | async) === 'Manager'">
+     <a routerLink="/Monthly-calendar">Vista Mensile</a>
+     </li>
+     <li *ngIf="(userRole$ | async) === 'Manager'">
+       <a routerLink="/view-weekly">Vista Settimanale</a>
+     </li>
+      <li *ngIf="(userRole$ | async) !== null">
+        <a routerLink="/payslip">La tua Busta Paga</a>
       </li>
-
     </ul>
     <button class="btn-logout" (click)="onLogout()">Logout</button>
   </nav>
 </header>
 
 <main class="main-content">
-  <section class="calendar">
-    <ng-container *ngFor="let week of twoWeeks">
-      <!-- header giorni -->
-      <div class="calendar-row header">
-        <div
-          *ngFor="let d of week; let i = index"
-          class="calendar-cell header-cell"
-          [class.today]="d.toDateString() === today.toDateString()"
-        >
-          <div class="weekday">{{ ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'][i] }}</div>
-          <div class="date">{{ d.getDate() }}</div>
-        </div>
-      </div>
-      <!-- corpo vuoto -->
-      <div class="calendar-row body">
-        <div *ngFor="let d of week" class="calendar-cell body-cell"></div>
-      </div>
-    </ng-container>
-  </section>
+
+  <!-- SE MANAGER: mostra il calendario settimanale -->
+  <ng-container *ngIf="(userRole$ | async) === 'Manager'; else employeeView">
+    <section class="weekly-section">
+      <h2>I turni di questa settimana</h2>
+     <app-view-weekly></app-view-weekly>
+    </section>
+  </ng-container>
+
+  <!-- SE IMPIEGATO: due settimane personali -->
+  <ng-template #employeeView>
+  <app-two-weeks-calendar></app-two-weeks-calendar>
+  </ng-template>
+
 </main>

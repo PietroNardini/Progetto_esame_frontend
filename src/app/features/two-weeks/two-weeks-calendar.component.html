@@ -1,0 +1,20 @@
+<div class="tw-header">
+  <button (click)="prevFortnight()">‹ 2 sett. indietro</button>
+  <button (click)="nextFortnight()">2 sett. avanti ›</button>
+</div>
+
+<div class="tw-grid">
+  <!-- intestazione date -->
+  <div class="tw-cell tw-cell--header" *ngFor="let d of days">
+    {{ d | date:'EEE dd MMM' }}
+  </div>
+
+  <!-- per ogni giorno, la o le fasce -->
+  <div class="tw-cell" *ngFor="let d of days">
+    <ng-container *ngFor="let slot of assignmentsFor(d)">
+      <div class="tw-slot">
+        {{ slot.start }}–{{ slot.end }}
+      </div>
+    </ng-container>
+  </div>
+</div>

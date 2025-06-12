@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule }      from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService }       from '../../../core/auth.service';
+import { ViewWeeklyComponent }   from '../../view-weekly/view-weekly.component';
 import { Observable }        from 'rxjs';
+import { TwoWeeksCalendarComponent } from '../../two-weeks/two-weeks-calendar.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [ CommonModule, RouterModule, ViewWeeklyComponent, TwoWeeksCalendarComponent ],
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']

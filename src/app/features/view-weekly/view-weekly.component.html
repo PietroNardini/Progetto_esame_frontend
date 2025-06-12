@@ -1,0 +1,35 @@
+<header class="wc-header">
+  <button class="wc-nav-btn" (click)="prevWeek()">‹</button>
+  <h2 class="wc-title">
+    {{ weekDates[0] | date:'dd MMM' }} – {{ weekDates[6] | date:'dd MMM yyyy' }}
+  </h2>
+  <button class="wc-nav-btn" (click)="nextWeek()">›</button>
+</header>
+
+<div class="wc-grid">
+  <!-- colonna vuota per allineare le etichette orarie -->
+  <div class="wc-empty"></div>
+
+  <!-- intestazione giorni -->
+  <div *ngFor="let d of weekDates" class="wc-day-header">
+    {{ d | date:'EEE dd' }}
+  </div>
+
+  <!-- righe orarie -->
+  <ng-container *ngFor="let h of hoursRange">
+    <!-- etichetta oraria -->
+    <div class="wc-hour-label">{{ h }}</div>
+    <!-- per ogni giorno: mostra le pill con nomi -->
+    <ng-container *ngFor="let d of weekDates">
+      <div class="wc-cell" [class.today]="isToday(d)">
+        <ng-container *ngFor="let rec of assignmentsFor(h,d)">
+          <ng-container *ngFor="let emp of rec.datiImpiegati">
+            <span class="wc-pill" title="{{ emp.nome }} {{ emp.cognome }}">
+              {{ emp.nome }} {{ emp.cognome }}
+            </span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

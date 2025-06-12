@@ -16,6 +16,7 @@ export interface OraImpiegatoRecord {
   data:            string;           // “YYYY-MM-DD”
   inizio:          string;           // “HH:mm:ss”
   fine:            string;           // “HH:mm:ss”
+   tipo:     'NORMALE' | 'STRAORDINARIO';
   datiImpiegati: Array<{
     id:      string;
     nome:    string;

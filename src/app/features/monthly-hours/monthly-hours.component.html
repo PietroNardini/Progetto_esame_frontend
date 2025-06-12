@@ -1,4 +1,12 @@
 <!-- src/app/features/monthly-hours/monthly-hours.component.html -->
+
+<a routerLink="/dashboard" class="back-arrow" aria-label="Torna alla Dashboard">
+  <svg xmlns="http://www.w3.org/2000/svg" class="arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7 7-7" />
+  </svg>
+  <span class="back-text">Torna alla Home</span>
+</a>
+
 <header class="mh-header">
   <button class="mh-nav-btn" (click)="prevMonth()">‹</button>
   <h2 class="mh-title">{{ current | date:'MMMM yyyy' }}</h2>
@@ -26,8 +34,8 @@
               class="mh-pill"
               [ngClass]="
                 a.tipo==='STRAORDINARIO'
-                ? 'mh-pill--extra'
-                : 'mh-pill--normal'
+                  ? 'mh-pill--extra'
+                  : 'mh-pill--normal'
               "
             >
               {{ a.inizio.substr(0,5) }}–{{ a.fine.substr(0,5) }}

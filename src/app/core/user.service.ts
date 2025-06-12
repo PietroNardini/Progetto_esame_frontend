@@ -110,4 +110,17 @@ export class UserService {
       { email, password }
     );
   }
+
+  /** CALCOLO STIPENDIO */
+calculateSalary(empId: number, month: string): Observable<{ [key:string]: any }> {
+  const body = {
+    Id_Impiegato: empId.toString(),
+    mese:         month
+  };
+  return this.http.post<{ [key:string]: any }>(
+    `${this.baseUrl}/CalcoloStipendio`,
+    body
+  );
+}
+
 }

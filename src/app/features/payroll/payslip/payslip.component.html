@@ -1,0 +1,68 @@
+<!-- src/app/features/payroll/payslip/payslip.component.html -->
+<div class="payslip-card">
+  <h2>La Tua Busta Paga</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- ID utente nascosto -->
+    <input type="hidden" formControlName="empId" />
+
+    <!-- Selezione mese -->
+    <div class="form-row">
+      <label for="month">Mese</label>
+      <select id="month" formControlName="month">
+        <option value="" disabled>— Seleziona mese —</option>
+        <option *ngFor="let m of months" [value]="m.value">
+          {{ m.label }}
+        </option>
+      </select>
+      <small
+        *ngIf="form.get('month')?.hasError('required') && form.touched"
+        class="error"
+      >
+        Devi scegliere un mese
+      </small>
+    </div>
+
+    <!-- Pulsante di invio -->
+    <div class="form-actions">
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Calcolo in corso…' : 'Mostra Busta Paga' }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Errore -->
+  <div *ngIf="error" class="alert-error">{{ error }}</div>
+
+  <!-- Risultato raw dal backend -->
+  <table *ngIf="rawResult" class="result-table">
+    <tr *ngFor="let kv of rawResult | keyvalue">
+      <th>{{ kv.key }}</th>
+      <td>{{ kv.value }}</td>
+    </tr>
+  </table>
+
+  <!-- Cedolino calcolato in front-end -->
+  <table *ngIf="payslip" class="result-table" style="margin-top:1rem;">
+    <tr>
+      <th>Lordo</th>
+      <td>{{ payslip.lordo | currency:'EUR' }}</td>
+    </tr>
+    <tr>
+      <th>Contributi INPS</th>
+      <td>{{ payslip.contributi | currency:'EUR' }}</td>
+    </tr>
+    <tr>
+      <th>Imponibile fiscale</th>
+      <td>{{ payslip.imponibile | currency:'EUR' }}</td>
+    </tr>
+    <tr>
+      <th>Tasse IRPEF</th>
+      <td>{{ payslip.tasse | currency:'EUR' }}</td>
+    </tr>
+    <tr>
+      <th>Netto a pagare</th>
+      <td>{{ payslip.netto | currency:'EUR' }}</td>
+    </tr>
+  </table>
+</div>

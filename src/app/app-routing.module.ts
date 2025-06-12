@@ -10,7 +10,10 @@ import { FilterComponent }          from './features/filter/filter.component';
 import { ForgotPasswordComponent }  from './features/forgot-password/forgot-password.component';
 import { ChangePasswordComponent }  from './features/change-password/change-password.component';
 import { AssignMultiHoursComponent } from './features/assign-hours/assign-hours-multiple/assign-hours-multiple';
-import { WeeklyCalendarComponent }  from './features/weekly-calendar/weekly-calendar/weekly-calendar.component';
+import { MonthlyCalendarComponent }  from './features/weekly-calendar/weekly-calendar/monthly-calendar.component';
+import { PayslipComponent } from './features/payroll/payslip/payslip.component';
+import { TwoWeeksCalendarComponent } from './features/two-weeks/two-weeks-calendar.component';
+
 // import { AssignHoursComponent }     from './features/assign-hours/assign-hours-single/assign-hours.component';  
 import { MonthlyHoursComponent } from './features/monthly-hours/monthly-hours.component';
 import { AuthGuard }                from './core/auth.guard';
@@ -72,8 +75,19 @@ const routes: Routes = [
   },
 
   {
-    path: 'weekly-calendar',
-    component: WeeklyCalendarComponent,
+    path: 'Monthly-calendar',
+    component: MonthlyCalendarComponent,
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'two-weeks', 
+    component: TwoWeeksCalendarComponent ,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'payslip',
+    component: PayslipComponent,
     canActivate: [AuthGuard]
   },
 
