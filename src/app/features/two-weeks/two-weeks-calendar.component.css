@@ -1,0 +1,37 @@
+.tw-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.tw-header button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.tw-grid {
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  gap: 0.5rem;
+}
+.tw-cell {
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 0.5rem;
+  min-height: 60px;
+}
+.tw-cell--header {
+  background: transparent;
+  font-weight: bold;
+  text-align: center;
+}
+.tw-slot {
+  background: #e0f2ff;    /* azzurro chiaro */
+  color: #004085;         /* blu scuro */
+  padding: 0.3rem 0.5rem;
+  border-radius: 12px;
+  margin-bottom: 0.25rem;
+  font-size: 0.85rem;
+  text-align: center;
+}

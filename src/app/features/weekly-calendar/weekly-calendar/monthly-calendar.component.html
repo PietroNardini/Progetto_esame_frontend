@@ -1,0 +1,33 @@
+<!-- src/app/features/monthly-hours/monthly-calendar.component.html -->
+
+<header class="mh-header">
+  <button class="mh-nav-btn" (click)="prevMonth()">‹</button>
+  <h2 class="mh-title">{{ current | date:'MMMM yyyy' }}</h2>
+  <button class="mh-nav-btn" (click)="nextMonth()">›</button>
+</header>
+
+<div class="mh-weekdays">
+  <div *ngFor="let wd of ['Lun','Mar','Mer','Gio','Ven','Sab','Dom']" class="mh-weekday">
+    {{ wd }}
+  </div>
+</div>
+
+<div class="mh-grid">
+  <ng-container *ngFor="let day of daysInMonth">
+    <div
+      class="mh-cell"
+      [class.today]="day.toDateString() === today.toDateString()"
+    >
+      <div class="mh-date">{{ day.getDate() }}</div>
+
+      <!-- mostriamo una sola volta ogni impiegato assegnato -->
+      <ng-container *ngFor="let emp of uniqueEmployeesFor(day)">
+        <span
+          class="mh-pill mh-pill--normal"
+        >
+          {{ emp.nome }} {{ emp.cognome }}
+        </span>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>
