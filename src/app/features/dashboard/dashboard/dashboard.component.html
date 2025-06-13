@@ -1,4 +1,3 @@
-<!-- src/app/features/dashboard/dashboard/dashboard.component.html -->
 <header class="navbar">
   <nav class="nav-container">
     <ul class="nav-list">
@@ -18,12 +17,9 @@
       <li *ngIf="(userRole$ | async) !== null">
         <a routerLink="/monthly-hours">Ore Mensili</a>
       </li>
-     <li *ngIf="(userRole$ | async) === 'Manager'">
-     <a routerLink="/Monthly-calendar">Vista Mensile</a>
-     </li>
-     <li *ngIf="(userRole$ | async) === 'Manager'">
-       <a routerLink="/view-weekly">Vista Settimanale</a>
-     </li>
+      <li *ngIf="(userRole$ | async) === 'Manager'">
+        <a routerLink="/Monthly-calendar">Vista Mensile</a>
+      </li>
       <li *ngIf="(userRole$ | async) !== null">
         <a routerLink="/payslip">La tua Busta Paga</a>
       </li>
@@ -33,18 +29,16 @@
 </header>
 
 <main class="main-content">
-
   <!-- SE MANAGER: mostra il calendario settimanale -->
   <ng-container *ngIf="(userRole$ | async) === 'Manager'; else employeeView">
     <section class="weekly-section">
-      <h2>I turni di questa settimana</h2>
-     <app-view-weekly></app-view-weekly>
+      <h2 class="section-title">I turni di questa settimana</h2>
+      <app-view-weekly></app-view-weekly>
     </section>
   </ng-container>
 
   <!-- SE IMPIEGATO: due settimane personali -->
   <ng-template #employeeView>
-  <app-two-weeks-calendar></app-two-weeks-calendar>
+    <app-two-weeks-calendar></app-two-weeks-calendar>
   </ng-template>
-
 </main>

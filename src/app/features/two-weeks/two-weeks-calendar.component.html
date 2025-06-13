@@ -1,20 +1,31 @@
 <div class="tw-header">
-  <button (click)="prevFortnight()">‹ 2 sett. indietro</button>
-  <button (click)="nextFortnight()">2 sett. avanti ›</button>
+  <button (click)="prevFortnight()">&#8592; Indietro</button>
+  <div class="month-year">{{ currentMonthYear }}</div>
+  <button (click)="nextFortnight()">Avanti &#8594;</button>
 </div>
 
 <div class="tw-grid">
-  <!-- intestazione date -->
-  <div class="tw-cell tw-cell--header" *ngFor="let d of days">
-    {{ d | date:'EEE dd MMM' }}
+  <!-- Prima settimana: giorni con giorno completo + data -->
+  <div *ngFor="let day of days.slice(0,7)" class="tw-cell tw-cell--header" [class.today]="isToday(day)">
+    {{ day.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' }) | titlecase }}
   </div>
 
-  <!-- per ogni giorno, la o le fasce -->
-  <div class="tw-cell" *ngFor="let d of days">
-    <ng-container *ngFor="let slot of assignmentsFor(d)">
-      <div class="tw-slot">
-        {{ slot.start }}–{{ slot.end }}
-      </div>
-    </ng-container>
+  <!-- Prima settimana: caselle vuote o con slot -->
+  <div *ngFor="let day of days.slice(0,7)" class="tw-cell" [class.today]="isToday(day)">
+    <div *ngFor="let slot of assignmentsFor(day)" class="tw-slot">
+      {{ slot.start }} - {{ slot.end }}
+    </div>
+  </div>
+
+  <!-- Seconda settimana: giorni con giorno completo + data -->
+  <div *ngFor="let day of days.slice(7,14)" class="tw-cell tw-cell--header" [class.today]="isToday(day)">
+    {{ day.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' }) | titlecase }}
+  </div>
+
+  <!-- Seconda settimana: caselle vuote o con slot -->
+  <div *ngFor="let day of days.slice(7,14)" class="tw-cell" [class.today]="isToday(day)">
+    <div *ngFor="let slot of assignmentsFor(day)" class="tw-slot">
+      {{ slot.start }} - {{ slot.end }}
+    </div>
   </div>
 </div>

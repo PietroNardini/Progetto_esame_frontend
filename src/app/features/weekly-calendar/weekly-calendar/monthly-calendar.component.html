@@ -1,30 +1,41 @@
-<!-- src/app/features/monthly-hours/monthly-calendar.component.html -->
+<!-- Torna alla Home -->
+<a class="back-arrow" routerLink="/dashboard">
+  <svg xmlns="http://www.w3.org/2000/svg" class="arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+  </svg>
+  Torna alla Home
+</a>
 
+<!-- Titolo pagina -->
+<h1 class="mh-page-title">Vista Mensile ore</h1>
+
+<!-- Navigazione mese -->
 <header class="mh-header">
   <button class="mh-nav-btn" (click)="prevMonth()">‹</button>
   <h2 class="mh-title">{{ current | date:'MMMM yyyy' }}</h2>
   <button class="mh-nav-btn" (click)="nextMonth()">›</button>
 </header>
 
+<!-- Giorni della settimana -->
 <div class="mh-weekdays">
   <div *ngFor="let wd of ['Lun','Mar','Mer','Gio','Ven','Sab','Dom']" class="mh-weekday">
     {{ wd }}
   </div>
 </div>
 
+<!-- Griglia calendario -->
 <div class="mh-grid">
   <ng-container *ngFor="let day of daysInMonth">
     <div
       class="mh-cell"
       [class.today]="day.toDateString() === today.toDateString()"
+      [class.empty]="day.getMonth() !== current.getMonth()"
     >
       <div class="mh-date">{{ day.getDate() }}</div>
 
-      <!-- mostriamo una sola volta ogni impiegato assegnato -->
+      <!-- Mostra solo una volta per impiegato -->
       <ng-container *ngFor="let emp of uniqueEmployeesFor(day)">
-        <span
-          class="mh-pill mh-pill--normal"
-        >
+        <span class="mh-pill mh-pill--normal">
           {{ emp.nome }} {{ emp.cognome }}
         </span>
       </ng-container>

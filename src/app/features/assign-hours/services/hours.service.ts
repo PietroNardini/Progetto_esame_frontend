@@ -1,28 +1,23 @@
-// src/app/features/assign-hours/services/hours.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Ora {
-  id:                   number;
-  data:                 string;
-  tipo:                 string;
-  turno_lavorativo_id:  number;
-  inizio:               string;  // “HH:mm:ss”
-  fine:                 string;  // “HH:mm:ss”
+  id: number;
+  data: string;
+  tipo: string;
+  turno_lavorativo_id: number;
+  inizio: string;  // orario inizio “HH:mm:ss”
+  fine: string;    // orario fine “HH:mm:ss”
 }
+
 export interface OraImpiegatoRecord {
-  oraId:           number;
-  data:            string;           // “YYYY-MM-DD”
-  inizio:          string;           // “HH:mm:ss”
-  fine:            string;           // “HH:mm:ss”
-   tipo:     'NORMALE' | 'STRAORDINARIO';
-  datiImpiegati: Array<{
-    id:      string;
-    nome:    string;
-    cognome: string;
-    email:   string;
-  }>;
+  oraId: number;
+  data: string;    // data in formato “YYYY-MM-DD”
+  inizio: string;  // orario inizio “HH:mm:ss”
+  fine: string;    // orario fine “HH:mm:ss”
+  tipo: 'NORMALE' | 'STRAORDINARIO';
+  datiImpiegati: Array<{ id: string; nome: string; cognome: string; email: string }>;
 }
 
 export type MonthlyAssignment = Ora;
@@ -33,82 +28,56 @@ export class HoursService {
 
   constructor(private http: HttpClient) {}
 
-  
-  getAllWorkingHours(
-    filters: { month?: string; day?: string; year?: string } = {}
-  ): Observable<Ora[]> {
-    return this.http.post<Ora[]>(
-      `${this.baseUrl}/GetAllWorkingHours`,
-      filters
-    );
+  // Ottiene tutte le ore lavorative con filtri opzionali
+  getAllWorkingHours(filters: { month?: string; day?: string; year?: string } = {}): Observable<Ora[]> {
+    return this.http.post<Ora[]>(`${this.baseUrl}/GetAllWorkingHours`, filters);
   }
 
-  getMonthlyAssignments(
-    impId: number,
-    month: number,
-    year: number
-  ): Observable<MonthlyAssignment[]> {
+  // Ottiene tutte le ore assegnate a un impiegato per mese/anno
+  getMonthlyAssignments(impId: number, month: number, year: number): Observable<MonthlyAssignment[]> {
     const body = {
       Id_Impiegato: impId.toString(),
-      month:        month.toString(),
-      year:         year.toString()
+      month: month.toString(),
+      year: year.toString()
     };
-    return this.http.post<MonthlyAssignment[]>(
-      `${this.baseUrl}/GetAllWorkingHoursByImpiegato`,
-      body
-    );
+    return this.http.post<MonthlyAssignment[]>(`${this.baseUrl}/GetAllWorkingHoursByImpiegato`, body);
   }
 
-
+  // Assegna una singola ora a un impiegato (normale o straordinario)
   assignSingleHour(
-    oraId:   number,
-    impId:   number,
+    oraId: number,
+    impId: number,
     tipoOra: 'normale' | 'straordinario'
   ): Observable<{ message?: string; error?: string }> {
     const body = {
-      Id_Ora:       oraId.toString(),
+      Id_Ora: oraId.toString(),
       Id_Impiegato: impId.toString(),
       tipoOra
     };
-    return this.http.post<{ message?: string; error?: string }>(
-      `${this.baseUrl}/AssegnaSingolaOra`,
-      body
-    );
+    return this.http.post<{ message?: string; error?: string }>(`${this.baseUrl}/AssegnaSingolaOra`, body);
   }
 
+  // Assegna più ore a più impiegati contemporaneamente
   assignMultipleHours(
     idsOre: number[],
     idsImp: number[],
     tipoOra: 'normale' | 'straordinario'
   ): Observable<{ message?: string; error?: string }> {
     const body = {
-      Lista_Id_Ore:       idsOre,
+      Lista_Id_Ore: idsOre,
       Lista_Id_Impiegati: idsImp,
       tipoOra
     };
-    return this.http.post<{ message?: string; error?: string }>(
-      `${this.baseUrl}/AssegnaOre`,
-      body
-    );
-  }
-  getEmployeeHours(
-    empId: number,
-    filters: { month?: string; day?: string; year?: string } = {}
-  ): Observable<Ora[]> {
-    return this.http.post<Ora[]>(
-      `${this.baseUrl}/GetAllWorkingHoursByImpiegato`,
-      { Id_Impiegato: empId.toString(), ...filters }
-    );
+    return this.http.post<{ message?: string; error?: string }>(`${this.baseUrl}/AssegnaOre`, body);
   }
 
+  // Recupera le ore assegnate a un impiegato con filtri opzionali
+  getEmployeeHours(empId: number, filters: { month?: string; day?: string; year?: string } = {}): Observable<Ora[]> {
+    return this.http.post<Ora[]>(`${this.baseUrl}/GetAllWorkingHoursByImpiegato`, { Id_Impiegato: empId.toString(), ...filters });
+  }
 
-  getAssignmentsByRange(
-      start: string, 
-      end:   string
-    ): Observable<OraImpiegatoRecord[]> {
-    return this.http.post<OraImpiegatoRecord[]>(
-      `${this.baseUrl}/GetOreImpiegatiPerRange`,
-      { start, end }
-    );
+  // Recupera le ore assegnate a impiegati in un intervallo di date
+  getAssignmentsByRange(start: string, end: string): Observable<OraImpiegatoRecord[]> {
+    return this.http.post<OraImpiegatoRecord[]>(`${this.baseUrl}/GetOreImpiegatiPerRange`, { start, end });
   }
 }

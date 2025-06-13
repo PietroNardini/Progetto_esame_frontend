@@ -1,11 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule }                from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HoursService, OraImpiegatoRecord } from '../assign-hours/services/hours.service';
-import { AuthService }                 from '../../core/auth.service';
+import { AuthService } from '../../core/auth.service';
 
+// Interfaccia che rappresenta uno slot orario con inizio e fine
 interface Slot {
-  start: string; // “HH:mm”
-  end:   string; // “HH:mm”
+  start: string; // Ora inizio (formato "HH:mm")
+  end: string;   // Ora fine (formato "HH:mm")
 }
 
 @Component({
@@ -16,37 +17,48 @@ interface Slot {
   styleUrls: ['./two-weeks-calendar.component.css']
 })
 export class TwoWeeksCalendarComponent implements OnInit {
-  private hrs   = inject(HoursService);
-  private auth  = inject(AuthService);
 
-  // lunedì di partenza e 14 giorni
+  // Iniettiamo i servizi necessari con Angular inject
+  private hrs = inject(HoursService);
+  private auth = inject(AuthService);
+
+  // Data iniziale della visualizzazione: lunedì della prima settimana
   private startDate!: Date;
+
+  // Array contenente le 14 date (due settimane)
   days: Date[] = [];
 
+  // Id utente autenticato
   empId!: string;
+
+  // Lista di tutti gli assegnamenti di ore relativi alle due settimane
   assignments: OraImpiegatoRecord[] = [];
 
   ngOnInit() {
-    // 1) prendi l’ID impiegato (deve esistere, altrimenti redirect nel padre)
+    // Prendi l'ID utente dall'autenticazione
     const uid = this.auth.getUserId();
     if (!uid) throw new Error('Utente non loggato');
     this.empId = uid.toString();
 
-    // 2) calcola lun–+14gg
+    // Trova il lunedì della settimana corrente e costruisci l'array di 14 giorni
     this.startDate = this.getMonday(new Date());
     this.buildFortnight();
 
-    // 3) carica turni
+    // Carica gli assegnamenti per l'intervallo di due settimane
     this.loadAssignments();
   }
 
+
   private getMonday(ref: Date): Date {
     const d = new Date(ref);
-    const offset = (d.getDay() + 6) % 7;  // 0=Lun,...6=Dom
+    // getDay(): domenica=0, lunedì=1, ..., sabato=6
+    // Vogliamo lunedì = 0, quindi offset = (giorno + 6) % 7
+    const offset = (d.getDay() + 6) % 7;
     d.setDate(d.getDate() - offset);
     return d;
   }
 
+  // Costruisce l'array days contenente 14 date consecutive a partire da startDate
   private buildFortnight() {
     this.days = Array.from({ length: 14 }, (_, i) => {
       const d = new Date(this.startDate);
@@ -55,54 +67,60 @@ export class TwoWeeksCalendarComponent implements OnInit {
     });
   }
 
+  // Vai indietro di due settimane e ricarica dati
   prevFortnight() {
     this.startDate.setDate(this.startDate.getDate() - 14);
     this.buildFortnight();
     this.loadAssignments();
   }
+
+ // Vai avanti di due settimane e ricarica dati
   nextFortnight() {
     this.startDate.setDate(this.startDate.getDate() + 14);
     this.buildFortnight();
     this.loadAssignments();
   }
 
+
   private formatY(d: Date): string {
     const y = d.getFullYear();
     const m = String(d.getMonth() + 1).padStart(2, '0');
-    const dd= String(d.getDate()).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
     return `${y}-${m}-${dd}`;
   }
 
+  // Carica gli assegnamenti tra la prima e la quattordicesima data
+  
   private loadAssignments() {
     const start = this.formatY(this.days[0]);
-    const end   = this.formatY(this.days[13]);
+    const end = this.formatY(this.days[13]);
     this.hrs.getAssignmentsByRange(start, end)
       .subscribe(list => this.assignments = list || []);
   }
 
-  /** unisce tutti i record contigui di questo impiegato in fasce */
   assignmentsFor(day: Date): Slot[] {
     const key = this.formatY(day);
-    // filtro solo record di questa data e di questo impiegato
+
+    // Filtra gli assegnamenti del giorno e dell'impiegato loggato
     const raw = this.assignments
       .filter(r => r.data === key)
       .filter(r => r.datiImpiegati.some(u => u.id === this.empId));
 
     if (!raw.length) return [];
 
-    // ordina per orario di inizio
-    const sorted = [...raw].sort((a,b) => a.inizio.localeCompare(b.inizio));
+    // Ordina per orario inizio
+    const sorted = [...raw].sort((a, b) => a.inizio.localeCompare(b.inizio));
 
-    // merge contigui
+    // Accorpa gli slot consecutivi (fine di uno = inizio del prossimo)
     const slots: Slot[] = [];
     let cur: Slot = {
-      start: sorted[0].inizio.substr(0,5),
-      end:   sorted[0].fine.substr(0,5)
+      start: sorted[0].inizio.substring(0, 5),
+      end: sorted[0].fine.substring(0, 5)
     };
 
     for (let i = 1; i < sorted.length; i++) {
-      const s = sorted[i].inizio.substr(0,5);
-      const e = sorted[i].fine.substr(0,5);
+      const s = sorted[i].inizio.substring(0, 5);
+      const e = sorted[i].fine.substring(0, 5);
       if (s === cur.end) {
         cur.end = e;
       } else {
@@ -111,6 +129,27 @@ export class TwoWeeksCalendarComponent implements OnInit {
       }
     }
     slots.push(cur);
+
     return slots;
+  }
+
+  isToday(date: Date): boolean {
+    const today = new Date();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  }
+
+  
+   // Proprietà calcolata per mostrare "Giugno 2025" ecc. in header// 
+  get currentMonthYear(): string {
+    if (!this.startDate) return '';
+    // Formatta con italiano e maiuscole iniziali
+    return this.startDate.toLocaleDateString('it-IT', {
+      year: 'numeric',
+      month: 'long'
+    }).replace(/^\w/, c => c.toUpperCase());
   }
 }

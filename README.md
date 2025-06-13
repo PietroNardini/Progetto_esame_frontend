@@ -1,63 +1,41 @@
-<<<<<<< HEAD
 # Progetto_esame_frontend
+
+
+## Descrizione
+Il frontend dell'applicazione include diverse schermate dedicate alla gestione dei dipendenti. Le funzionalità principali comprendono l’assegnazione delle ore lavorative, il filtraggio dei dipendenti per dipartimento e la creazione di nuovi dipendenti da parte dei manager. L’interfaccia è pensata per essere semplice e funzionale, con particolare attenzione all’usabilità e alla chiarezza operativa. Il tutto è stato fatto utilizzando diverse tecnologie (Vedi "Tecnologie Utilizzate").
+
+## Tecnologie utilizzate
+- HTML
+- CSS
+- Typescript
+- Angular
+- Gradle (con `gradlew` per la connessione con il backend)
+- Visual Studio Code
+
+## Installazione e avvio
+Per avviare il frontend in locale:
+
+- Avviare Backend (Vedi README.md nella folder del backend);
+
+- Entrare nella folder del frontend tramite il terminale:
+
+```bash
+cd .\ Progetto_esame_frontend \
+npm install  (wait until the dependencies are downloaded) 
+ng serve --proxy-config proxy.conf.json    
+```
+
+## Funzionalità principali
+- Schermata di Login e autenticazione
+- Creazione dipendenti da parte dei manager
+- Filtraggio dipendenti in base al dipartimento
+- Assegnazione ore lavorative
+- Visualizzazione stipendio mensile Lordo e Netto del dipendente
+- Visualizzazione da parte di Manager e Dipendenti delle ore di lavoro (Straordinari compresi)
+- 
+
+
+## Autori
+- Francesco Fiorini - Frontend Developer
+- Roberto D'Angelo – Frontend  Developer
 =======
-# ProgettoIngswFrontend
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
-
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
->>>>>>> 2f3d188 (initial commit)

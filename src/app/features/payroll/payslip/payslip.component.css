@@ -1,68 +1,181 @@
-.payslip-card {
-  max-width: 500px;
+.payslip-wrapper {
+  max-width: 900px;
   margin: 2rem auto;
-  padding: 1.5rem;
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 0 1.5rem;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  color: #1a202c;
+  position: relative;
 }
-.payslip-card h2 {
-  margin-bottom: 1rem;
+
+/* Torna alla home */
+.back-arrow {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #3182ce;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.05rem;
+  transition: color 0.2s;
+}
+
+.back-arrow:hover {
+  color: #2b6cb0;
+  text-decoration: underline;
+}
+
+.arrow-icon {
+  width: 1.3rem;
+  height: 1.3rem;
+  stroke-width: 2.5;
+}
+
+/* Card container */
+.payslip-card {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  max-width: 600px;
+  margin: 4rem auto 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.payslip-card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #2d3748;
   text-align: center;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.75rem;
 }
 
 .form-row {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 1rem;
 }
 
-.form-row label {
-  display: block;
-  margin-bottom: 0.3rem;
+.row-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: #2a2e35;
+}
+
+select {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.6rem;
+  border: 1px solid #cbd5e0;
+  background: #f9fafb;
+  font-size: 1rem;
+}
+
+select:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.25);
+  background-color: white;
+}
+
+.error {
+  color: #e53e3e;
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
   font-weight: 500;
 }
 
-.form-row select,
-.form-row input[type="month"] {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
+/* Bottoni */
 .form-actions {
-  text-align: center;
+  display: flex;
+  justify-content: center;
   margin-top: 1rem;
 }
 
-.form-actions button {
-  background: #007bff;
-  color: #fff;
-  padding: 0.6rem 1.2rem;
+.btn-submit {
+  background: #3182ce;
+  color: white;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: #2b6cb0;
+  transform: translateY(-1px);
+}
+
+.btn-submit:disabled {
+  background: #a0aec0;
+  cursor: not-allowed;
+  opacity: 0.8;
 }
 
 .alert-error {
-  margin-top: 1rem;
-  color: #c00;
+  margin-top: 1.2rem;
+  padding: 1rem;
+  background: #fed7d7;
+  color: #c53030;
+  border-radius: 0.6rem;
   text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
+/* Tabelle */
 .result-table {
   width: 100%;
-  margin-top: 2rem;
   border-collapse: collapse;
+  margin-top: 1.5rem;
 }
 
 .result-table th,
 .result-table td {
-  border: 1px solid #ddd;
-  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  padding: 0.6rem 0.9rem;
+  text-align: left;
 }
 
 .result-table th {
-  background: #f4f4f4;
-  text-align: left;
+  background: #f7fafc;
   width: 40%;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.result-table td {
+  color: #4a5568;
+}
+
+.payslip-result {
+  margin-top: 2rem;
+}
+
+.payslip-result h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #2d3748;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+  text-align: center;
+}
+
+.result-table .netto {
+  font-weight: 700;
+  color: #2f855a;
 }
