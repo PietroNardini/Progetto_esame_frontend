@@ -14,7 +14,7 @@
       <li *ngIf="(userRole$ | async) === 'Manager'">
         <a routerLink="/filter">Dipendenti per Dipartimento</a>
       </li>
-      <li *ngIf="(userRole$ | async) === 'dipendente'">
+      <li *ngIf="(userRole$ | async) !== 'Manager'">
         <a routerLink="/monthly-hours">Ore Mensili</a>
       </li>
       <li *ngIf="(userRole$ | async) === 'Manager'">
