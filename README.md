@@ -32,7 +32,6 @@ ng serve --proxy-config proxy.conf.json
 - Assegnazione ore lavorative
 - Visualizzazione stipendio mensile Lordo e Netto del dipendente
 - Visualizzazione da parte di Manager e Dipendenti delle ore di lavoro (Straordinari compresi)
-- 
 
 
 ## Autori
